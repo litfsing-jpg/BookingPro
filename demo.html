@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Демо-доступ - BookingPro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text { background: linear-gradient(135deg, #14B8A6, #0EA5E9); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .demo-step { transition: all 0.3s ease; }
+        .demo-step:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        .telegram-mockup { background: #f0f9ff; border: 2px solid #0ea5e9; }
+        .message { animation: slideIn 0.5s ease-out; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="text-2xl font-bold gradient-text">BookingPro</div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="text-gray-500 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Главная</a>
+                        <a href="settings.html" class="text-gray-500 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Настройки</a>
+                        <a href="analytics.html" class="text-gray-500 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Аналитика</a>
+                    </div>
+                </div>
+                
+                <!-- Mobile Burger Menu -->
+                <div class="md:hidden">
+                    <button id="burger-menu" class="text-gray-600 hover:text-teal-600 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Desktop Login Button -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <button onclick="showDemoForm()" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        Начать бесплатно
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <div class="flex flex-col space-y-2">
+                    <a href="index.html" class="text-gray-500 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Главная</a>
+                    <a href="settings.html" class="text-gray-500 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Настройки</a>
+                    <a href="analytics.html" class="text-gray-500 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Аналитика</a>
+                    <button onclick="showDemoForm()" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors mt-2">
+                        Начать бесплатно
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="pt-24 pb-12 bg-gradient-to-br from-teal-50 to-blue-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl lg:text-5xl font-bold mb-6">
+                    Демо-доступ к <span class="gradient-text">BookingPro</span>
+                </h1>
+                <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                    Ознакомьтесь с функциональностью сервиса, чтобы понять, как он может автоматизировать запись клиентов в вашем бизнесе
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="showDemoForm()" class="bg-teal-600 hover:bg-teal-700 text-white px-8 py-4 rounded-lg font-semibold transition-all transform hover:scale-105">
+                        Получить полный доступ
+                    </button>
+                    <button onclick="startDemo()" class="border-2 border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white px-8 py-4 rounded-lg font-semibold transition-all">
+                        Начать демо-тур
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Steps -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Как работает BookingPro</h2>
+                <p class="text-xl text-gray-600">Простые шаги к автоматизации вашего бизнеса</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="demo-step bg-white rounded-2xl shadow-lg p-6 text-center">
+                    <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-teal-600">1</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Подключите календарь</h3>
+                    <p class="text-gray-600 mb-4">Синхронизируйте Google Calendar за 5 минут через простой интерфейс</p>
+                    <div class="text-sm text-teal-600 font-medium">2-5 минут</div>
+                </div>
+
+                <div class="demo-step bg-white rounded-2xl shadow-lg p-6 text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-blue-600">2</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Создайте бота</h3>
+                    <p class="text-gray-600 mb-4">Зарегистрируйте Telegram-бота через BotFather и получите токен</p>
+                    <div class="text-sm text-blue-600 font-medium">3-5 минут</div>
+                </div>
+
+                <div class="demo-step bg-white rounded-2xl shadow-lg p-6 text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-green-600">3</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Настройте услуги</h3>
+                    <p class="text-gray-600 mb-4">Добавьте список услуг, цены и рабочее время</p>
+                    <div class="text-sm text-green-600 font-medium">5-10 минут</div>
+                </div>
+
+                <div class="demo-step bg-white rounded-2xl shadow-lg p-6 text-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-purple-600">4</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Получайте клиентов</h3>
+                    <p class="text-gray-600 mb-4">Клиенты записываются сами, вы получаете уведомления</p>
+                    <div class="text-sm text-purple-600 font-medium">24/7</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Telegram Bot Demo -->
+    <section class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Как клиенты видят вашего бота</h2>
+                <p class="text-xl text-gray-600">Простой и понятный интерфейс для ваших клиентов</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6">Интерфейс Telegram-бота</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white font-bold text-sm">1</div>
+                            <div>
+                                <h4 class="font-semibold mb-2">Клиент находит вашего бота</h4>
+                                <p class="text-gray-600">По ссылке из Instagram, визитки или вашего сайта</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white font-bold text-sm">2</div>
+                            <div>
+                                <h4 class="font-semibold mb-2">Выбирает дату и время</h4>
+                                <p class="text-gray-600">Интерактивный календарь показывает свободные слоты</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white font-bold text-sm">3</div>
+                            <div>
+                                <h4 class="font-semibold mb-2">Оставляет контакты</h4>
+                                <p class="text-gray-600">Имя, телефон и комментарий к записи</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white font-bold text-sm">4</div>
+                            <div>
+                                <h4 class="font-semibold mb-2">Получает подтверждение</h4>
+                                <p class="text-gray-600">Ссылка на добавление встречи в свой календарь</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="telegram-mockup rounded-2xl p-6">
+                    <div class="bg-white rounded-lg p-4 mb-4">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-white font-bold">B</span>
+                            </div>
+                            <div>
+                                <div class="font-semibold">Ваш Бот</div>
+                                <div class="text-sm text-gray-500">онлайн</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="telegram-chat" class="space-y-3 max-h-96 overflow-y-auto">
+                        <div class="message bg-gray-100 rounded-lg p-3 ml-8">
+                            <div class="text-sm">Добро пожаловать! Я помогу вам записаться на занятие.</div>
+                            <div class="text-xs text-gray-500 mt-1">14:25</div>
+                        </div>
+                        
+                        <div class="message bg-blue-100 rounded-lg p-3 mr-8">
+                            <div class="text-sm">Хочу записаться на тренировку</div>
+                            <div class="text-xs text-gray-500 mt-1 text-right">14:26</div>
+                        </div>
+                        
+                        <div class="message bg-gray-100 rounded-lg p-3 ml-8">
+                            <div class="text-sm mb-2">Выберите дату:</div>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button class="bg-teal-600 text-white px-3 py-2 rounded text-sm">15 ноября</button>
+                                <button class="bg-gray-200 text-gray-700 px-3 py-2 rounded text-sm">16 ноября</button>
+                                <button class="bg-gray-200 text-gray-700 px-3 py-2 rounded text-sm">17 ноября</button>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-2">14:27</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 flex items-center space-x-2">
+                        <button onclick="nextDemoStep()" class="bg-teal-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-teal-700 transition-colors">
+                            Следующий шаг
+                        </button>
+                        <button onclick="resetDemo()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm hover:bg-gray-300 transition-colors">
+                            Начать заново
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Demo -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Возможности сервиса</h2>
+                <p class="text-xl text-gray-600">Все функции, которые вам нужны для автоматизации</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Автоматическое бронирование</h3>
+                    <p class="text-gray-600 mb-4">Клиенты видят только свободные слоты и могут мгновенно записаться</p>
+                    <div class="text-sm text-blue-600 font-medium">✓ Работает 24/7</div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Синхронизация календарей</h3>
+                    <p class="text-gray-600 mb-4">Автоматическая синхронизация с Google Calendar в реальном времени</p>
+                    <div class="text-sm text-green-600 font-medium">✓ Без конфликтов</div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4 19h6v-6H4v6zM16 3h5v5h-5V3zM4 3h6v6H4V3z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Уведомления</h3>
+                    <p class="text-gray-600 mb-4">Мгновенные уведомления о новых записях и отменах</p>
+                    <div class="text-sm text-purple-600 font-medium">✓ В Telegram и Email</div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Аналитика</h3>
+                    <p class="text-gray-600 mb-4">Детальная статистика по записям, доходам и эффективности</p>
+                    <div class="text-sm text-yellow-600 font-medium">✓ В реальном времени</div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Мобильное приложение</h3>
+                    <p class="text-gray-600 mb-4">Управляйте расписанием с любого устройства через Telegram</p>
+                    <div class="text-sm text-red-600 font-medium">✓ Всегда под рукой</div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Поддержка 24/7</h3>
+                    <p class="text-gray-600 mb-4">Помощь в настройке и решении любых вопросов</p>
+                    <div class="text-sm text-indigo-600 font-medium">✓ Быстро и качественно</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-teal-600">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold text-white mb-4">Готовы начать?</h2>
+            <p class="text-xl text-teal-100 mb-8">Получите 14 дней бесплатного использования и протестируйте все функции</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="showDemoForm()" class="bg-white text-teal-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                    Начать бесплатно
+                </button>
+                <a href="index.html" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-teal-600 transition-colors">
+                    На главную
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="text-2xl font-bold gradient-text mb-4">BookingPro</div>
+                <p class="text-gray-400 mb-8">Автоматизация записи для современных специалистов</p>
+                <div class="text-sm text-gray-500">
+                    © 2025 BookingPro. Все права защищены.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Demo functionality
+        let demoStep = 0;
+        const demoMessages = [
+            {
+                side: 'bot',
+                text: 'Выберите время для вашей тренировки:',
+                buttons: ['09:00', '11:00', '14:00', '16:00']
+            },
+            {
+                side: 'user',
+                text: '11:00'
+            },
+            {
+                side: 'bot',
+                text: 'Отлично! Осталось указать ваши контактные данные:',
+                form: true
+            },
+            {
+                side: 'bot',
+                text: 'Запись подтверждена! Ждем вас 15 ноября в 11:00. Ссылка для добавления в календарь: calendar.link/abc123'
+            }
+        ];
+
+        function initializeBurgerMenu() {
+            const burgerMenu = document.getElementById('burger-menu');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (burgerMenu && mobileMenu) {
+                burgerMenu.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                    
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        anime({
+                            targets: mobileMenu,
+                            opacity: [0, 1],
+                            translateY: [-10, 0],
+                            duration: 300,
+                            easing: 'easeOutQuart'
+                        });
+                    }
+                });
+            }
+        }
+
+        function startDemo() {
+            demoStep = 0;
+            const chat = document.getElementById('telegram-chat');
+            chat.innerHTML = `
+                <div class="message bg-gray-100 rounded-lg p-3 ml-8">
+                    <div class="text-sm">Добро пожаловать! Я помогу вам записаться на занятие.</div>
+                    <div class="text-xs text-gray-500 mt-1">14:25</div>
+                </div>
+                <div class="message bg-blue-100 rounded-lg p-3 mr-8">
+                    <div class="text-sm">Хочу записаться на тренировку</div>
+                    <div class="text-xs text-gray-500 mt-1 text-right">14:26</div>
+                </div>
+            `;
+            nextDemoStep();
+        }
+
+        function nextDemoStep() {
+            if (demoStep >= demoMessages.length) {
+                demoStep = 0;
+                return;
+            }
+
+            const message = demoMessages[demoStep];
+            const chat = document.getElementById('telegram-chat');
+            
+            setTimeout(() => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message bg-${message.side === 'bot' ? 'gray' : 'blue'}-100 rounded-lg p-3 ${message.side === 'bot' ? 'ml-8' : 'mr-8'}`;
+                
+                let content = `<div class="text-sm">${message.text}</div>`;
+                
+                if (message.buttons) {
+                    content += '<div class="grid grid-cols-2 gap-2 mt-2">';
+                    message.buttons.forEach(button => {
+                        content += `<button class="bg-teal-600 text-white px-3 py-2 rounded text-sm">${button}</button>`;
+                    });
+                    content += '</div>';
+                }
+                
+                if (message.form) {
+                    content += `
+                        <div class="mt-3 space-y-2">
+                            <input type="text" placeholder="Ваше имя" class="w-full px-3 py-2 border rounded text-sm">
+                            <input type="tel" placeholder="Телефон" class="w-full px-3 py-2 border rounded text-sm">
+                            <button class="bg-teal-600 text-white px-4 py-2 rounded text-sm">Отправить</button>
+                        </div>
+                    `;
+                }
+                
+                content += `<div class="text-xs text-gray-500 mt-1 ${message.side === 'user' ? 'text-right' : ''}">14:${27 + demoStep}</div>`;
+                
+                messageDiv.innerHTML = content;
+                chat.appendChild(messageDiv);
+                
+                chat.scrollTop = chat.scrollHeight;
+                demoStep++;
+            }, 1000);
+        }
+
+        function resetDemo() {
+            demoStep = 0;
+            const chat = document.getElementById('telegram-chat');
+            chat.innerHTML = `
+                <div class="message bg-gray-100 rounded-lg p-3 ml-8">
+                    <div class="text-sm">Добро пожаловать! Я помогу вам записаться на занятие.</div>
+                    <div class="text-xs text-gray-500 mt-1">14:25</div>
+                </div>
+                <div class="message bg-blue-100 rounded-lg p-3 mr-8">
+                    <div class="text-sm">Хочу записаться на тренировку</div>
+                    <div class="text-xs text-gray-500 mt-1 text-right">14:26</div>
+                </div>
+            `;
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeBurgerMenu();
+            
+            // Animate demo steps
+            anime({
+                targets: '.demo-step',
+                translateY: [20, 0],
+                opacity: [0, 1],
+                duration: 600,
+                delay: anime.stagger(100),
+                easing: 'easeOutQuart'
+            });
+        });
+
+        // Demo form modal (reuse from main.js)
+        function showDemoForm() {
+            const modal = document.createElement('div');
+            modal.id = 'demo-modal';
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+            modal.onclick = (e) => {
+                if (e.target === modal) {
+                    closeDemoModal();
+                }
+            };
+            
+            modal.innerHTML = `
+                <div class="bg-white rounded-2xl p-8 max-w-md w-full">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold">Доступ к демо</h3>
+                        <button onclick="closeDemoModal()" class="text-gray-400 hover:text-gray-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <form id="demo-form" class="space-y-4" onsubmit="handleDemoFormSubmit(event)">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Ваше имя</label>
+                            <input type="text" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent" placeholder="Иван Иванов">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent" placeholder="ivan@example.com">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Телефон</label>
+                            <input type="tel" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent" placeholder="+7 (999) 123-45-67">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Ваша специализация</label>
+                            <select name="specialization" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                                <option value="">Выберите специализацию</option>
+                                <option value="fitness">Фитнес тренер</option>
+                                <option value="yoga">Йога инструктор</option>
+                                <option value="tutor">Репетитор</option>
+                                <option value="consultant">Консультант</option>
+                                <option value="massage">Массажист</option>
+                                <option value="other">Другое</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input type="checkbox" id="agree" required class="mr-2">
+                            <label for="agree" class="text-sm text-gray-600">Согласен с условиями использования</label>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-teal-600 hover:bg-teal-700 text-white py-3 rounded-lg font-semibold transition-colors">
+                            Получить доступ
+                        </button>
+                    </form>
+                    
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-gray-500">Или продолжите <a href="demo.html" class="text-teal-600 hover:text-teal-700">ознакомление с демо</a></p>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Animate modal appearance
+            anime({
+                targets: modal,
+                opacity: [0, 1],
+                duration: 300,
+                easing: 'easeOutQuart'
+            });
+            
+            anime({
+                targets: modal.querySelector('.bg-white'),
+                scale: [0.8, 1],
+                opacity: [0, 1],
+                duration: 400,
+                delay: 100,
+                easing: 'easeOutQuart'
+            });
+        }
+
+        function closeDemoModal() {
+            const modal = document.getElementById('demo-modal');
+            if (modal) {
+                anime({
+                    targets: modal,
+                    opacity: [1, 0],
+                    duration: 300,
+                    easing: 'easeInQuart',
+                    complete: () => {
+                        if (document.body.contains(modal)) {
+                            document.body.removeChild(modal);
+                        }
+                    }
+                });
+            }
+        }
+
+        function handleDemoFormSubmit(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            // Show loading state
+            const submitBtn = document.querySelector('#demo-form button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Отправка...';
+            submitBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Show success message
+                const successMessage = document.createElement('div');
+                successMessage.className = 'bg-green-50 border border-green-200 rounded-lg p-4 mt-4';
+                successMessage.innerHTML = `
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <div>
+                            <div class="font-semibold text-green-800">Заявка отправлена!</div>
+                            <div class="text-sm text-green-600">Мы отправим вам доступ на почту в течение 5 минут</div>
+                        </div>
+                    </div>
+                `;
+                
+                const form = document.getElementById('demo-form');
+                form.appendChild(successMessage);
+                
+                // Reset form
+                form.reset();
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                
+                // Remove success message after 5 seconds
+                setTimeout(() => {
+                    if (form.contains(successMessage)) {
+                        form.removeChild(successMessage);
+                    }
+                }, 5000);
+                
+                // Close modal after 2 seconds
+                setTimeout(() => {
+                    closeDemoModal();
+                }, 2000);
+                
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

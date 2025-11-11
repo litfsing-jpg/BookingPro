@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройки - BookingPro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text { background: linear-gradient(135deg, #14B8A6, #0EA5E9); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .step-number { width: 32px; height: 32px; }
+        .status-indicator { width: 12px; height: 12px; }
+        .settings-card { transition: all 0.3s ease; }
+        .settings-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+        .toggle-switch { width: 44px; height: 24px; }
+        .toggle-switch input:checked + .toggle-slider { background-color: #14B8A6; }
+        .toggle-switch input:checked + .toggle-slider:before { transform: translateX(20px); }
+        .toggle-slider { position: relative; display: inline-block; width: 100%; height: 100%; background-color: #ccc; border-radius: 12px; transition: 0.3s; }
+        .toggle-slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: 0.3s; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="text-2xl font-bold gradient-text">BookingPro</div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="text-gray-500 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Главная</a>
+                        <a href="#" class="text-gray-900 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Настройки</a>
+                        <a href="analytics.html" class="text-gray-500 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Аналитика</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        Сохранить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="pt-24 pb-8 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold mb-4">Настройки сервиса</h1>
+                <p class="text-xl text-gray-600">Настройте интеграции и параметры работы вашего бота</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <!-- Sidebar Navigation -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
+                        <nav class="space-y-2">
+                            <a href="#integrations" class="flex items-center px-4 py-3 text-sm font-medium text-teal-600 bg-teal-50 rounded-lg">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                                </svg>
+                                Интеграции
+                            </a>
+                            <a href="#calendar" class="flex items-center px-4 py-3 text-sm font-medium text-gray-600 hover:text-teal-600 hover:bg-gray-50 rounded-lg transition-colors">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                                Календарь
+                            </a>
+                            <a href="#services" class="flex items-center px-4 py-3 text-sm font-medium text-gray-600 hover:text-teal-600 hover:bg-gray-50 rounded-lg transition-colors">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                </svg>
+                                Услуги
+                            </a>
+                            <a href="#notifications" class="flex items-center px-4 py-3 text-sm font-medium text-gray-600 hover:text-teal-600 hover:bg-gray-50 rounded-lg transition-colors">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4 19h6v-6H4v6zM16 3h5v5h-5V3zM4 3h6v6H4V3z"></path>
+                                </svg>
+                                Уведомления
+                            </a>
+                            <a href="#billing" class="flex items-center px-4 py-3 text-sm font-medium text-gray-600 hover:text-teal-600 hover:bg-gray-50 rounded-lg transition-colors">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                                </svg>
+                                Тарифы
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Main Settings Content -->
+                <div class="lg:col-span-3 space-y-8">
+                    <!-- Integrations Section -->
+                    <div id="integrations" class="settings-card bg-white rounded-2xl shadow-lg p-8">
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h2 class="text-2xl font-bold mb-2">Интеграции</h2>
+                                <p class="text-gray-600">Подключите внешние сервисы для автоматизации</p>
+                            </div>
+                            <div class="status-indicator bg-green-500 rounded-full"></div>
+                        </div>
+
+                        <!-- Google Calendar Integration -->
+                        <div class="mb-8 p-6 bg-gray-50 rounded-xl">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                        <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                                            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-semibold">Google Calendar</h3>
+                                        <p class="text-sm text-gray-600">Синхронизация расписания</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <span class="text-sm text-green-600 font-medium">Подключено</span>
+                                    <div class="status-indicator bg-green-500 rounded-full"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">ID Календаря</label>
+                                    <input type="text" value="your-email@gmail.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Часовой пояс</label>
+                                    <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                                        <option value="Europe/Moscow" selected>Москва (GMT+3)</option>
+                                        <option value="Europe/Samara">Самара (GMT+4)</option>
+                                        <option value="Asia/Yekaterinburg">Екатеринбург (GMT+5)</option>
+                                        <option value="Asia/Omsk">Омск (GMT+6)</option>
+                                    </select>
+                                </div>
+                                <button onclick="checkGoogleConnection()" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                    <span class="connection-text">Проверить подключение</span>
+                                    <span class="loading-text hidden">Проверка...</span>
+                                </button>
+                            </div>
+
+                            <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                                <h4 class="font-semibold text-blue-900 mb-2">Инструкция по подключению:</h4>
+                                <ol class="text-sm text-blue-800 space-y-1">
+                                    <li>1. Перейдите в <a href="https://console.developers.google.com/" class="underline" target="_blank">Google Cloud Console</a></li>
+                                    <li>2. Создайте новый проект или выберите существующий</li>
+                                    <li>3. Включите Google Calendar API</li>
+                                    <li>4. Создайте учетные данные OAuth 2.0</li>
+                                    <li>5. Скопируйте Client ID и Client Secret</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <!-- Telegram Bot Integration -->
+                        <div class="p-6 bg-gray-50 rounded-xl">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                        <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c-.1-.002-.3.05-.65.347l-3.414 3.414-1.774-1.774a.75.75 0 0 0-1.06 1.06l2.5 2.5a.75.75 0 0 0 1.06 0l4-4a.75.75 0 0 0-1.06-1.06l-2.22 2.22-1.774-1.774a.75.75 0 0 0-1.06 1.06l1.774 1.774-1.774 1.774a.75.75 0 1 0 1.06 1.06l1.774-1.774 2.22 2.22a.75.75 0 0 0 1.06-1.06l-2.22-2.22 1.774-1.774a.75.75 0 0 0-1.06-1.06l-1.774 1.774z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-semibold">Telegram Bot</h3>
+                                        <p class="text-sm text-gray-600">Бот для приема заявок</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <span class="text-sm text-yellow-600 font-medium">Требует настройки</span>
+                                    <div class="status-indicator bg-yellow-500 rounded-full"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Токен бота</label>
+                                    <input type="text" placeholder="Введите токен вашего бота" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Username бота</label>
+                                    <input type="text" placeholder="@your_bot_username" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                                </div>
+                                <button onclick="connectTelegramBot()" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                    <span class="connection-text">Подключить бота</span>
+                                    <span class="loading-text hidden">Подключение...</span>
+                                </button>
+                            </div>
+
+                            <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                                <h4 class="font-semibold text-blue-900 mb-2">Как создать бота:</h4>
+                                <ol class="text-sm text-blue-800 space-y-1">
+                                    <li>1. Откройте Telegram и найдите @BotFather</li>
+                                    <li>2. Отправьте команду /newbot</li>
+                                    <li>3. Придумайте название бота</li>
+                                    <li>4. Укажите username (должен оканчиваться на bot)</li>
+                                    <li>5. Скопируйте токен и вставьте выше</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calendar Settings -->
+                    <div id="calendar" class="settings-card bg-white rounded-2xl shadow-lg p-8">
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h2 class="text-2xl font-bold mb-2">Настройки календаря</h2>
+                                <p class="text-gray-600">Настройте рабочее время и правила бронирования</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Начало рабочего дня</label>
+                                <input type="time" value="09:00" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Конец рабочего дня</label>
+                                <input type="time" value="18:00" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Длительность слота (мин)</label>
+                                <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                                    <option value="30">30 минут</option>
+                                    <option value="45">45 минут</option>
+                                    <option value="60" selected>60 минут</option>
+                                    <option value="90">90 минут</option>
+                                    <option value="120">120 минут</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Буфер между встречами (мин)</label>
+                                <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                                    <option value="0" selected>0 минут</option>
+                                    <option value="15">15 минут</option>
+                                    <option value="30">30 минут</option>
+                                    <option value="60">60 минут</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mt-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Рабочие дни</label>
+                            <div class="grid grid-cols-7 gap-2">
+                                <label class="flex flex-col items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="checkbox" checked class="mb-2">
+                                    <span class="text-sm">Пн</span>
+                                </label>
+                                <label class="flex flex-col items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="checkbox" checked class="mb-2">
+                                    <span class="text-sm">Вт</span>
+                                </label>
+                                <label class="flex flex-col items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="checkbox" checked class="mb-2">
+                                    <span class="text-sm">Ср</span>
+                                </label>
+                                <label class="flex flex-col items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="checkbox" checked class="mb-2">
+                                    <span class="text-sm">Чт</span>
+                                </label>
+                                <label class="flex flex-col items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="checkbox" checked class="mb-2">
+                                    <span class="text-sm">Пт</span>
+                                </label>
+                                <label class="flex flex-col items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="checkbox" class="mb-2">
+                                    <span class="text-sm">Сб</span>
+                                </label>
+                                <label class="flex flex-col items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="checkbox" class="mb-2">
+                                    <span class="text-sm">Вс</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Services Settings -->
+                    <div id="services" class="settings-card bg-white rounded-2xl shadow-lg p-8">
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h2 class="text-2xl font-bold mb-2">Услуги и цены</h2>
+                                <p class="text-gray-600">Настройте список услуг и ценовую политику</p>
+                            </div>
+                            <button class="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors">
+                                Добавить услугу
+                            </button>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="p-4 border border-gray-200 rounded-lg">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h3 class="font-semibold">Персональная тренировка</h3>
+                                    <button class="text-red-600 hover:text-red-700">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Название</label>
+                                        <input type="text" value="Персональная тренировка" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Длительность (мин)</label>
+                                        <input type="number" value="60" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Цена (₽)</label>
+                                        <input type="number" value="2500" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-4 border border-gray-200 rounded-lg">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h3 class="font-semibold">Консультация</h3>
+                                    <button class="text-red-600 hover:text-red-700">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Название</label>
+                                        <input type="text" value="Консультация" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Длительность (мин)</label>
+                                        <input type="number" value="45" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Цена (₽)</label>
+                                        <input type="number" value="1800" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notifications Settings -->
+                    <div id="notifications" class="settings-card bg-white rounded-2xl shadow-lg p-8">
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h2 class="text-2xl font-bold mb-2">Уведомления</h2>
+                                <p class="text-gray-600">Настройте способы получения уведомлений</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                <div>
+                                    <h3 class="font-semibold">Новые записи</h3>
+                                    <p class="text-sm text-gray-600">Получать уведомления о новых бронированиях</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked class="sr-only">
+                                    <div class="toggle-slider"></div>
+                                </label>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                <div>
+                                    <h3 class="font-semibold">Отмены записей</h3>
+                                    <p class="text-sm text-gray-600">Уведомлять об отменах встреч</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked class="sr-only">
+                                    <div class="toggle-slider"></div>
+                                </label>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                <div>
+                                    <h3 class="font-semibold">Напоминания клиентам</h3>
+                                    <p class="text-sm text-gray-600">Автоматические напоминания за день до встречи</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" class="sr-only">
+                                    <div class="toggle-slider"></div>
+                                </label>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                <div>
+                                    <h3 class="font-semibold">Email уведомления</h3>
+                                    <p class="text-sm text-gray-600">Отправлять детали записи на email клиента</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked class="sr-only">
+                                    <div class="toggle-slider"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Billing Section -->
+                    <div id="billing" class="settings-card bg-white rounded-2xl shadow-lg p-8">
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h2 class="text-2xl font-bold mb-2">Тарифы и оплата</h2>
+                                <p class="text-gray-600">Управление подпиской и оплатой</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="p-6 border-2 border-teal-600 rounded-xl bg-teal-50">
+                                <div class="text-center">
+                                    <h3 class="text-xl font-bold mb-2">Профессиональный</h3>
+                                    <div class="text-3xl font-bold text-teal-600 mb-4">1,490₽</div>
+                                    <div class="text-sm text-gray-600 mb-6">в месяц</div>
+                                    <ul class="text-sm space-y-2 mb-6">
+                                        <li>✓ До 500 записей в месяц</li>
+                                        <li>✓ Неограниченное количество услуг</li>
+                                        <li>✓ Приоритетная поддержка</li>
+                                        <li>✓ Расширенная аналитика</li>
+                                    </ul>
+                                    <div class="bg-teal-600 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                        Текущий тариф
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-6 border border-gray-200 rounded-xl">
+                                <div class="text-center">
+                                    <h3 class="text-xl font-bold mb-2">Бизнес</h3>
+                                    <div class="text-3xl font-bold text-gray-600 mb-4">2,990₽</div>
+                                    <div class="text-sm text-gray-600 mb-6">в месяц</div>
+                                    <ul class="text-sm space-y-2 mb-6">
+                                        <li>✓ До 2000 записей в месяц</li>
+                                        <li>✓ Несколько специалистов</li>
+                                        <li>✓ White-label решение</li>
+                                        <li>✓ Персональный менеджер</li>
+                                    </ul>
+                                    <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors">
+                                        Выбрать тариф
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 p-6 bg-gray-50 rounded-lg">
+                            <h3 class="font-semibold mb-4">История платежей</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                                    <div>
+                                        <div class="font-medium">Оплата тарифа Профессиональный</div>
+                                        <div class="text-sm text-gray-600">01 ноября 2025</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="font-semibold">-1,490₽</div>
+                                        <div class="text-sm text-green-600">Оплачено</div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                                    <div>
+                                        <div class="font-medium">Оплата тарифа Профессиональный</div>
+                                        <div class="text-sm text-gray-600">01 октября 2025</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="font-semibold">-1,490₽</div>
+                                        <div class="text-sm text-green-600">Оплачено</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="text-2xl font-bold gradient-text mb-4">BookingPro</div>
+                <p class="text-gray-400 mb-8">Автоматизация записи для современных специалистов</p>
+                <div class="text-sm text-gray-500">
+                    © 2025 BookingPro. Все права защищены.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Connection check functions
+        function checkGoogleConnection() {
+            const button = event.target;
+            const connectionText = button.querySelector('.connection-text');
+            const loadingText = button.querySelector('.loading-text');
+            
+            // Show loading state
+            connectionText.classList.add('hidden');
+            loadingText.classList.remove('hidden');
+            button.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Reset button state
+                connectionText.classList.remove('hidden');
+                loadingText.classList.add('hidden');
+                button.disabled = false;
+                
+                // Show success notification
+                showNotification('Google Calendar успешно подключен!', 'success');
+                
+                // Update status indicator
+                const statusIndicator = button.closest('.p-6').querySelector('.status-indicator');
+                statusIndicator.className = 'status-indicator bg-green-500 rounded-full';
+                
+                // Update status text
+                const statusText = button.closest('.p-6').querySelector('.text-yellow-600');
+                if (statusText) {
+                    statusText.textContent = 'Подключено';
+                    statusText.className = 'text-sm text-green-600 font-medium';
+                }
+                
+            }, 2000);
+        }
+
+        function connectTelegramBot() {
+            const button = event.target;
+            const connectionText = button.querySelector('.connection-text');
+            const loadingText = button.querySelector('.loading-text');
+            
+            // Show loading state
+            connectionText.classList.add('hidden');
+            loadingText.classList.remove('hidden');
+            button.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Reset button state
+                connectionText.classList.remove('hidden');
+                loadingText.classList.add('hidden');
+                button.disabled = false;
+                
+                // Show success notification
+                showNotification('Telegram-бот успешно подключен!', 'success');
+                
+                // Update status indicator
+                const statusIndicator = button.closest('.p-6').querySelector('.status-indicator');
+                statusIndicator.className = 'status-indicator bg-green-500 rounded-full';
+                
+                // Update status text
+                const statusText = button.closest('.p-6').querySelector('.text-yellow-600');
+                if (statusText) {
+                    statusText.textContent = 'Подключено';
+                    statusText.className = 'text-sm text-green-600 font-medium';
+                }
+                
+            }, 2500);
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            const bgColor = type === 'success' ? 'bg-green-600' : type === 'error' ? 'bg-red-600' : 'bg-blue-600';
+            
+            notification.className = `fixed top-20 right-4 ${bgColor} text-white px-6 py-3 rounded-lg shadow-lg z-50`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            anime({
+                targets: notification,
+                translateX: [300, 0],
+                opacity: [0, 1],
+                duration: 400,
+                easing: 'easeOutQuart'
+            });
+            
+            setTimeout(() => {
+                anime({
+                    targets: notification,
+                    translateX: [0, 300],
+                    opacity: [1, 0],
+                    duration: 400,
+                    easing: 'easeInQuart',
+                    complete: () => {
+                        if (document.body.contains(notification)) {
+                            document.body.removeChild(notification);
+                        }
+                    }
+                });
+            }, 3000);
+        }
+
+        // Burger menu functionality
+        function initializeBurgerMenu() {
+            const burgerMenu = document.getElementById('burger-menu');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (burgerMenu && mobileMenu) {
+                burgerMenu.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                    
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        anime({
+                            targets: mobileMenu,
+                            opacity: [0, 1],
+                            translateY: [-10, 0],
+                            duration: 300,
+                            easing: 'easeOutQuart'
+                        });
+                    }
+                });
+            }
+        }
+
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeBurgerMenu();
+            
+            // Animate cards on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        anime({
+                            targets: entry.target,
+                            translateY: [20, 0],
+                            opacity: [0, 1],
+                            duration: 600,
+                            easing: 'easeOutQuart'
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.settings-card').forEach(card => {
+                observer.observe(card);
+            });
+
+            // Smooth scrolling for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Toggle switches
+            document.querySelectorAll('.toggle-switch input').forEach(toggle => {
+                toggle.addEventListener('change', function() {
+                    const slider = this.nextElementSibling;
+                    if (this.checked) {
+                        slider.style.backgroundColor = '#14B8A6';
+                    } else {
+                        slider.style.backgroundColor = '#ccc';
+                    }
+                });
+            });
+
+            // Save settings button
+            const saveButton = document.querySelector('button[class*="bg-teal-600"]');
+            if (saveButton && saveButton.textContent.includes('Сохранить')) {
+                saveButton.addEventListener('click', function() {
+                    showNotification('Настройки сохранены успешно!', 'success');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
