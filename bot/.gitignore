@@ -1,0 +1,31 @@
+# Зависимости
+node_modules/
+package-lock.json
+
+# Переменные окружения
+.env
+
+# Firebase
+firebase-service-account.json
+
+# Google Calendar
+google-calendar-credentials.json
+
+# Логи
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+.cache/
