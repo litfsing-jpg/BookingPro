@@ -590,42 +590,6 @@ document.addEventListener('click', function(e) {
         e.preventDefault();
         showDemoForm();
     }
-    
-    if (e.target.textContent.includes('Посмотреть демо') || 
-        e.target.textContent.includes('Посмотреть инструкцию')) {
-        
-        // Create demo notification
-        const notification = document.createElement('div');
-        notification.className = 'fixed top-20 right-4 bg-teal-600 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-        notification.textContent = 'Демо-режим: Функция доступна в полной версии';
-        
-        document.body.appendChild(notification);
-        
-        // Animate notification
-        anime({
-            targets: notification,
-            translateX: [300, 0],
-            opacity: [0, 1],
-            duration: 400,
-            easing: 'easeOutQuart'
-        });
-        
-        // Remove notification after 3 seconds
-        setTimeout(() => {
-            anime({
-                targets: notification,
-                translateX: [0, 300],
-                opacity: [1, 0],
-                duration: 400,
-                easing: 'easeInQuart',
-                complete: () => {
-                    if (document.body.contains(notification)) {
-                        document.body.removeChild(notification);
-                    }
-                }
-            });
-        }, 3000);
-    }
 });
 
 // Initialize burger menu when DOM is loaded
